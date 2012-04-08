@@ -1,0 +1,5 @@
+rm out
+mkfifo out
+gcc trigger.c -o trigger
+./trigger A > out &
+gdb hello

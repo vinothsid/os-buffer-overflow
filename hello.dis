@@ -1,0 +1,267 @@
+(gdb) disassem readString
+Dump of assembler code for function readString:
+0x000000000040070a <readString+0>:      push   %rbp - Stack base pointer of current stack frame is pushed to stack
+0x000000000040070b <readString+1>:      mov    %rsp,%rbp
+0x000000000040070e <readString+4>:      push   %r13
+0x0000000000400710 <readString+6>:      push   %r12
+0x0000000000400712 <readString+8>:      push   %rbx
+0x0000000000400713 <readString+9>:      sub    $0x8,%rsp
+0x0000000000400717 <readString+13>:     mov    %rdi,%r13
+0x000000000040071a <readString+16>:     mov    %rdx,-0x20(%rbp) - address of checkName function 0x400869 is moved to stack location -0x20(%rbp)
+0x000000000040071e <readString+20>:     add    $0x24,%esi - starting of char buf[BUFSIZE + r];
+0x0000000000400721 <readString+23>:     movslq %esi,%rsi    
+0x0000000000400724 <readString+26>:     add    $0x1e,%rsi - for 16byte alignment purpose
+0x0000000000400728 <readString+30>:     and    $0xfffffffffffffff0,%rsi - for masking last 16 byte . 
+0x000000000040072c <readString+34>:     sub    %rsi,%rsp - subtract 0x40 from the stack pointer . The resulting address will be the address of buf
+0x000000000040072f <readString+37>:     lea    0xf(%rsp),%rax
+0x0000000000400734 <readString+42>:     mov    %rax,%r12
+0x0000000000400737 <readString+45>:     and    $0xfffffffffffffff0,%r12
+0x000000000040073b <readString+49>:     mov    $0x0,%ebx
+0x0000000000400740 <readString+54>:     mov    0x200679(%rip),%rdi        # 0x600dc0 <stdin@@GLIBC_2.2.5>
+0x0000000000400747 <readString+61>:     callq  0x4005e0 <fgetc@plt>
+0x000000000040074c <readString+66>:     mov    %eax,%edx
+{
+0x000000000040074e <readString+68>:     cmp    $0xffffffffffffffff,%eax 
+0x0000000000400751 <readString+71>:     je     0x400764 <readString+90>
+0x0000000000400753 <readString+73>:     cmp    $0xa,%eax
+0x0000000000400756 <readString+76>:     je     0x400764 <readString+90>
+} -  if ((c == EOF) || (c == '\n'))
+
+{
+0x0000000000400758 <readString+78>:     movslq %ebx,%rax
+0x000000000040075b <readString+81>:     mov    %dl,(%r12,%rax,1)
+0x000000000040075f <readString+85>:     add    $0x1,%ebx
+} - buf[i++] = c;
+
+{
+0x0000000000400762 <readString+88>:     jmp    0x400740 <readString+54>
+0x0000000000400764 <readString+90>:     movslq %ebx,%rax
+0x0000000000400767 <readString+93>:     movb   $0x0,(%r12,%rax,1)
+0x000000000040076c <readString+98>:     mov    $0x0,%edx
+} - buf[i] = 0;
+{
+0x0000000000400771 <readString+103>:    movzbl (%r12,%rdx,1),%eax
+0x0000000000400776 <readString+108>:    mov    %al,0x0(%r13,%rdx,1)
+0x000000000040077b <readString+113>:    add    $0x1,%rdx
+0x000000000040077f <readString+117>:    cmp    $0x24,%rdx
+0x0000000000400783 <readString+121>:    jne    0x400771 <readString+103>
+} -  for (i = 0; i < BUFSIZE; i++)  s[i] = buf[i];
+
+{
+0x0000000000400785 <readString+123>:    mov    %r13,%rdi
+0x0000000000400788 <readString+126>:    mov    $0x0,%eax
+0x000000000040078d <readString+131>:    callq  *-0x20(%rbp)
+} - f(s);
+
+{
+0x0000000000400790 <readString+134>:    lea    -0x18(%rbp),%rsp
+0x0000000000400794 <readString+138>:    pop    %rbx -
+0x0000000000400795 <readString+139>:    pop    %r12 -
+0x0000000000400797 <readString+141>:    pop    %r13 - restore register values from stack back to actual registers
+0x0000000000400799 <readString+143>:    leaveq -
+0x000000000040079a <readString+144>:    retq   - Restore previous stack frame and program counter
+} - "}"
+---Type <return> to continue, or q <return> to quit---
+End of assembler dump.
+ssem main
+Dump of assembler code for function main:
+0x000000000040079b <main+0>:    push   %rbp
+0x000000000040079c <main+1>:    push   %rbx
+0x000000000040079d <main+2>:    sub    $0x8,%rsp
+0x00000000004007a1 <main+6>:    mov    %edi,%ebx
+0x00000000004007a3 <main+8>:    mov    %rsi,%rbp
+0x00000000004007a6 <main+11>:   callq  0x4005d0 <getpid@plt>
+0x00000000004007ab <main+16>:   mov    %eax,%edi
+0x00000000004007ad <main+18>:   callq  0x4005f0 <srand@plt>
+0x00000000004007b2 <main+23>:   cmp    $0x1,%ebx
+0x00000000004007b5 <main+26>:   jle    0x4007d8 <main+61>
+0x00000000004007b7 <main+28>:   mov    0x8(%rbp),%rax
+0x00000000004007bb <main+32>:   cmpb   $0x72,(%rax)
+0x00000000004007be <main+35>:   jne    0x4007d8 <main+61>
+0x00000000004007c0 <main+37>:   callq  0x400600 <rand@plt>
+0x00000000004007c5 <main+42>:   mov    %eax,%edx
+0x00000000004007c7 <main+44>:   sar    $0x1f,%edx
+0x00000000004007ca <main+47>:   shr    $0x1b,%edx
+0x00000000004007cd <main+50>:   add    %edx,%eax
+0x00000000004007cf <main+52>:   and    $0x1f,%eax
+0x00000000004007d2 <main+55>:   mov    %eax,%ebx
+0x00000000004007d4 <main+57>:   sub    %edx,%ebx
+0x00000000004007d6 <main+59>:   jmp    0x4007dd <main+66>
+0x00000000004007d8 <main+61>:   mov    $0x0,%ebx
+0x00000000004007dd <main+66>:   lea    0x2005fd(%rip),%edi        # 0x600de0 <Name>
+0x00000000004007e3 <main+72>:   and    $0xfffff000,%edi
+0x00000000004007e9 <main+78>:   mov    $0x7,%edx
+0x00000000004007ee <main+83>:   mov    $0x1,%esi
+0x00000000004007f3 <main+88>:   callq  0x400580 <mprotect@plt>
+0x00000000004007f8 <main+93>:   mov    $0x4009a8,%edi
+0x00000000004007fd <main+98>:   callq  0x4005a0 <puts@plt>
+0x0000000000400802 <main+103>:  mov    $0x400869,%edx --Address of checkName function is moved .
+0x0000000000400807 <main+108>:  mov    %ebx,%esi
+0x0000000000400809 <main+110>:  mov    $0x600de0,%edi
+0x000000000040080e <main+115>:  callq  0x40070a <readString> - calling readString
+{
+0x0000000000400813 <main+120>:  mov    $0x600de0,%esi
+0x0000000000400818 <main+125>:  mov    $0x4009bb,%edi
+0x000000000040081d <main+130>:  mov    $0xd,%ecx
+0x0000000000400822 <main+135>:  repz cmpsb %es:(%rdi),%ds:(%rsi)
+0x0000000000400824 <main+137>:  seta   %dl
+0x0000000000400827 <main+140>:  setb   %al
+0x000000000040082a <main+143>:  cmp    %al,%dl
+0x000000000040082c <main+145>:  jne    0x400835 <main+154>
+} -  if (strcmp(Name, "Andrew Appel") == 0)
+
+0x000000000040082e <main+147>:  movb   $0x43,0x20056f(%rip)        # 0x600da4 <grade> - grade = 'C';
+{
+0x0000000000400835 <main+154>:  mov    $0x600de0,%esi
+0x000000000040083a <main+159>:  mov    $0x4009c8,%edi
+---Type <return> to continue, or q <return> to quit---
+0x000000000040083f <main+164>:  mov    $0x0,%eax
+0x0000000000400844 <main+169>:  callq  0x400590 <printf@plt>
+} - push args Name and string in text section of printf then calls printf
+{
+0x0000000000400849 <main+174>:  movsbl 0x200554(%rip),%esi        # 0x600da4 <grade>
+0x0000000000400850 <main+181>:  mov    $0x4009f8,%edi
+0x0000000000400855 <main+186>:  mov    $0x0,%eax
+0x000000000040085a <main+191>:  callq  0x400590 <printf@plt>
+} - push args grade and string in text section , then calls printf
+
+{
+0x000000000040085f <main+196>:  mov    $0x0,%edi
+0x0000000000400864 <main+201>:  callq  0x4005b0 <exit@plt>
+} - exit(0);
+End of assembler dump.
+(gdb)
+
+2) Analysing data section:
+--------------------------
+================================
+[vchandr3@os47 buffer]$ objdump -d -j .data hello
+
+hello:     file format elf64-x86-64
+
+
+Disassembly of section .data:
+
+0000000000600da0 <__data_start>:
+  600da0:       00 00                   add    %al,(%rax)
+        ...
+
+0000000000600da4 <grade>:
+  600da4:       46 00 00 00                                         F...
+hello:     file format elf64-x86-64
+================================
+
+
+
+3)Analysing the bss section:
+----------------------------
+===============================
+[vchandr3@os47 buffer]$ objdump -d -j .bss hello
+
+Disassembly of section .bss:
+
+0000000000600dc0 <stdin@@GLIBC_2.2.5>:
+        ...
+
+0000000000600dc8 <completed.6108>:
+        ...
+
+0000000000600dd0 <dtor_idx.6110>:
+        ...
+
+0000000000600de0 <Name>:
+        ...
+[vchandr3@os47 buffer]$
+
+===============================
+
+4)Analysing the stack frame:
+-----------------------------
+===============================
+
+(gdb) x/112b $rsp
+0x7fffffffe410: 0x46    0x72    0x61    0x6e    0x6b    0x00    0x00    0x00 - String buf[] containing "Frank" at starting address 0x7fffffffe410.
+0x7fffffffe418: 0x0a    0x00    0x00    0x00    0x00    0x00    0x00    0x00
+0x7fffffffe420: 0x80    0xc7    0x16    0x34    0x30    0x00    0x00    0x00
+0x7fffffffe428: 0x9f    0x43    0xe7    0x33    0x30    0x00    0x00    0x00
+0x7fffffffe430: 0x80    0xc7    0x16    0x34    0x30    0x00    0x00    0x00
+0x7fffffffe438: 0x12    0x00    0x00    0x00    0x00    0x00    0x00    0x00
+0x7fffffffe440: 0x12    0x00    0x00    0x00    0x00    0x00    0x00    0x00
+0x7fffffffe448: 0x0e    0xa7    0xe6    0x33    0x30    0x00    0x00    0x00
+0x7fffffffe450: 0x69    0x08    0x40    0x00    0x00    0x00    0x00    0x00 - arg function ptr which is address of function checkName (0x400869)
+0x7fffffffe458: 0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x00 - value that was present in register rbx (contains arg 'r')
+0x7fffffffe460: 0x10    0x06    0x40    0x00    0x00    0x00    0x00    0x00 - value that was present in register r12 (containg arg address of 'Name' )
+x7fffffffe468: 0x60    0xe5    0xff    0xff    0xff    0x7f    0x00    0x00  - value that was present in register r13
+0x7fffffffe470: 0x68    0xe5    0xff    0xff    0xff    0x7f    0x00    0x00 - value that was present in register rbp ( previous stack pointer in main funtion  ) 
+0x7fffffffe478: 0x13    0x08    0x40    0x00    0x00    0x00    0x00    0x00 - value that was present in register rip ( return address 0x400813  )
+
+
+(gdb) run
+Starting program: /home/vchandr3/os/buffer/hello
+What is your name?
+Frank
+
+Breakpoint 1, readString (s=0x600de0 "", r=<value optimized out>,
+    f=0x400869 <checkName>) at hello.c:51
+51         buf[i] = 0;
+(gdb) bt
+#0  readString (s=0x600de0 "", r=<value optimized out>, f=0x400869 <checkName>)
+    at hello.c:51
+#1  0x0000000000400813 in main (argc=<value optimized out>, argv=0x7fffffffe568)
+    at hello.c:74
+(gdb) info frames
+Undefined info command: "frames".  Try "help info".
+(gdb) info frame
+Stack level 0, frame at 0x7fffffffe480:
+ rip = 0x400764 in readString (hello.c:51); saved rip 0x400813
+ called by frame at 0x7fffffffe4a0
+ source language c.
+ Arglist at 0x7fffffffe470, args: s=0x600de0 "", r=<value optimized out>,
+    f=0x400869 <checkName>
+ Locals at 0x7fffffffe470, Previous frame's sp is 0x7fffffffe480
+ Saved registers:
+  rbx at 0x7fffffffe458, rbp at 0x7fffffffe470, r12 at 0x7fffffffe460,
+  r13 at 0x7fffffffe468, rip at 0x7fffffffe478
+
+
+===============================
+
+
+5) Layout of various sections
+
+---------------------
+STACK Section
+====================
+"Main Stack Frame"
+
+====================      0x7fffffffe480 
+"readString Stack Frame" 
+rip                       0x7fffffffe478
+rbp		          0x7fffffffe470
+r13			  0x7fffffffe468
+r12			  0x7fffffffe460
+rbx			  0x7fffffffe458
+checkName (0x400869)      0x7fffffffe450
+....			  
+
+buf
+....			 0x7fffffffe410
+
+====================
+
+---------------------
+	|
+	|
+	|
+        \/
+
+
+
+----------------
+  BSS Section
+  "Name"         600de0 
+
+----------------
+  Data Section
+ "grade"         600da4          
+----------------
